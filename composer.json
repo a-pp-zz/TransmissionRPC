@@ -1,0 +1,25 @@
+{
+    "name": "appzz/transmission-rpc",
+    "description": "Transmission RPC Client",
+    "type": "library",
+    "keywords": [
+        "transmission",
+        "rpc"
+    ],
+    "homepage": "https://github.com/a-pp-zz/TransmissionRPC",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "CoolSwitcher",
+            "email": "ds@appzz.pw",
+            "role": "lead"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "appzz/arr": "1.*"
+    },
+    "autoload": {
+        "psr-4": {"AppZz\\Http\\": "src/"}
+    }
+}
