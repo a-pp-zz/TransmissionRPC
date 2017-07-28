@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "appzz/arr": "1.*"
+        "appzz/arr": "1.*",
+        "appzz/curl-client": "2.*"
     },
     "autoload": {
         "psr-4": {"AppZz\\Http\\": "src/"}
