@@ -7,7 +7,7 @@ use AppZz\Http\TransmissionRPC\Exception as Exception;
 /**
  * Class TransmissionRPC
  * @package AppZz\Http
- * @version 1.0.0
+ * @version 1.0.2
  * @author CoolSwitcher
  * @team AppZz
  */
@@ -51,17 +51,17 @@ class TransmissionRPC {
 		if (is_array ($input)) {
 
 			$secure = Arr::get ($input, 'secure', FALSE);
-			$host = Arr::get ($input, 'host', TransmissionRPC::TR_DEFAULT_HOST);
-			$port = Arr::get ($input, 'port', TransmissionRPC::TR_DEFAULT_PORT);
-			$path = Arr::get ($input, 'path', TransmissionRPC::TR_DEFAULT_PATH);
+			$host   = Arr::get ($input, 'host', TransmissionRPC::TR_DEFAULT_HOST);
+			$port   = Arr::get ($input, 'port', TransmissionRPC::TR_DEFAULT_PORT);
+			$path   = Arr::get ($input, 'path', TransmissionRPC::TR_DEFAULT_PATH);
 
 		} else if (is_string ($input)) {
 
-			$p = parse_url ($input);
+			$p      = parse_url ($input);
 			$secure = (Arr::get($p, 'scheme') === 'https');
-			$host = Arr::get($p, 'host', TransmissionRPC::TR_DEFAULT_HOST);
-			$port = Arr::get($p, 'port');
-			$path = Arr::get($p, 'path', TransmissionRPC::TR_DEFAULT_PATH);
+			$host   = Arr::get($p, 'host', TransmissionRPC::TR_DEFAULT_HOST);
+			$port   = Arr::get($p, 'port');
+			$path   = Arr::get($p, 'path', TransmissionRPC::TR_DEFAULT_PATH);
 
 			if ( ! $port AND $secure) {
 				$port = 443;
@@ -77,7 +77,7 @@ class TransmissionRPC {
 			$path = '/' . trim ($path, '/') . '/';
 		}
 
-		$this->_endpoint = sprintf ('http%s://%s:%d%s', ($secure ? 's' : ''), $host, $port, $path);		
+		$this->_endpoint = sprintf ('http%s://%s:%d%s', ($secure ? 's' : ''), $host, $port, $path);
 	}
 
 	public static function factory ($input)
@@ -99,9 +99,9 @@ class TransmissionRPC {
 
 		if ($password) {
 			$this->_password = $password;
-		}	
-		
-		return $this;		
+		}
+
+		return $this;
 	}
 
 	/**
@@ -114,7 +114,7 @@ class TransmissionRPC {
 		if ($tz) {
 			$this->_timezone = $tz;
 		}
-		
+
 		return $this;
 	}
 
@@ -128,7 +128,7 @@ class TransmissionRPC {
 		if ($fmt) {
 			$this->_datefmt = $fmt;
 		}
-		
+
 		return $this;
 	}
 
@@ -331,14 +331,14 @@ class TransmissionRPC {
 		} else {
 			$fields = $defaults;
 		}
-		
+
 		$args = [
 			'fields' => $fields,
 			'ids'    => $ids
 		];
 
 		$result = $this->_request ('torrent-get', $args);
-		return $this->_result ($result, 'arguments.torrents');		
+		return $this->_result ($result, 'arguments.torrents');
 	}
 
 	/**
@@ -350,10 +350,10 @@ class TransmissionRPC {
 	{
 		$args = [
 			'ids' => $ids
-		];		
+		];
 
 		$result = $this->_request ('torrent-start', $args);
-		return $this->_result ($result, TRUE);		
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -365,10 +365,10 @@ class TransmissionRPC {
 	{
 		$args = [
 			'ids' => $ids
-		];		
+		];
 
 		$result = $this->_request ('torrent-start-now', $args);
-		return $this->_result ($result, TRUE);		
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -380,10 +380,10 @@ class TransmissionRPC {
 	{
 		$args = [
 			'ids' => $ids
-		];		
+		];
 
 		$result = $this->_request ('torrent-stop', $args);
-		return $this->_result ($result, TRUE);		
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -395,10 +395,10 @@ class TransmissionRPC {
 	{
 		$args = [
 			'ids' => $ids
-		];		
+		];
 
 		$result = $this->_request ('reannounce', $args);
-		return $this->_result ($result, TRUE);		
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -410,10 +410,10 @@ class TransmissionRPC {
 	{
 		$args = [
 			'ids' => $ids
-		];		
+		];
 
 		$result = $this->_request ('torrent-verify', $args);
-		return $this->_result ($result, TRUE);		
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -451,7 +451,7 @@ class TransmissionRPC {
 	public function set ($args = [])
 	{
 		$result = $this->_request ('torrent-set', $args);
-		return $this->_result ($result, TRUE);		
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -538,7 +538,7 @@ class TransmissionRPC {
 		];
 
 		$result = $this->_request ('torrent-remove', $args);
-		return $this->_result ($result, TRUE);				
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -556,7 +556,7 @@ class TransmissionRPC {
 		];
 
 		$result = $this->_request ('torrent-set-location', $args);
-		return $this->_result ($result, TRUE);				
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -575,7 +575,7 @@ class TransmissionRPC {
 		];
 
 		$result = $this->_request ('torrent-rename-path', $args);
-		return $this->_result ($result, TRUE);				
+		return $this->_result ($result, TRUE);
 	}
 
 	/**
@@ -695,7 +695,7 @@ class TransmissionRPC {
 	private function _result ($data, $path = FALSE, $needed = [])
 	{
 		if (empty($data))
-			return FALSE;	
+			return FALSE;
 
 		$result = Arr::get($data, 'result');
 
@@ -703,7 +703,7 @@ class TransmissionRPC {
 			throw new Exception ($result);
 		}
 		elseif ($path) {
-			
+
 			if ($path === TRUE) {
 				return TRUE;
 			} else {
@@ -735,27 +735,27 @@ class TransmissionRPC {
 		switch ($status) {
 			case TransmissionRPC::TR_STATUS_STOPPED:
 				return 'Stopped';
-			
+
 			case TransmissionRPC::TR_STATUS_CHECK_WAIT:
 				return 'Queued to check';
-			
+
 			case TransmissionRPC::TR_STATUS_CHECK:
 				return 'Checking files';
-			
+
 			case TransmissionRPC::TR_STATUS_DOWNLOAD_WAIT:
 				return 'Queued to download';
-			
+
 			case TransmissionRPC::TR_STATUS_DOWNLOAD:
 				return 'Downloading';
-			
+
 			case TransmissionRPC::TR_STATUS_SEED_WAIT:
 				return 'Queued to seed';
-			
+
 			case TransmissionRPC::TR_STATUS_SEED:
-				return 'Seeding';																		
-			
+				return 'Seeding';
+
 			default:
-				return 'Unknown';						
+				return 'Unknown';
 		}
 	}
 
@@ -810,7 +810,7 @@ class TransmissionRPC {
 									$value = $value ? $this->_get_formatted_date($value) : NULL;
 								}
 							break;
-							
+
 							case 'totalSize':
 							case 'haveValid':
 							case 'length':
@@ -818,7 +818,7 @@ class TransmissionRPC {
 								if ($this->_populate === TRUE OR in_array ('size', $this->_populate)) {
 									$value = $this->_human_filesize($value);
 								}
-							break;		
+							break;
 						}
 					}
 				}
@@ -838,7 +838,7 @@ class TransmissionRPC {
 		if ( ! is_scalar($method)) {
 	    	throw new Exception ('Method name has no scalar value', Exception::E_INVALIDARGS);
 	    }
-	    
+
 	    if ( ! is_array($args)) {
 	    	throw new Exception ('Params must be given as array', Exception::E_INVALIDARGS);
 	    }
@@ -861,7 +861,9 @@ class TransmissionRPC {
 						$args['ids'] = (array) $args['ids'];
 					}
 				}
+
 				$this->_sanitize_data ($args);
+
 				$params = array(
 					'method'    => $method,
 					'arguments' => $args
@@ -871,12 +873,12 @@ class TransmissionRPC {
 		}
 
 		$request = CurlClient::$method($this->_endpoint, $params)
-						->agent(TransmissionRPC::UA)
+						->user_agent(TransmissionRPC::UA)
 						->accept('gzip', 'json');
 
 	    if ($method === 'post') {
-	    	$request->mime('json')
-					->add_header('X-Transmission-Session-Id', $this->_session_id);
+	    	$request->json()
+					->header('X-Transmission-Session-Id', $this->_session_id);
 		}
 
 		if ($this->_username AND $this->_password) {
@@ -885,30 +887,30 @@ class TransmissionRPC {
 
 		$response = $request->send();
 
-		if ($response === 200) {
-			return $request->get_body();
-		} else {
-			switch ($response) {
-				case 409:
-					if ($method === 'head') {
-						$headers = $request->get_headers();
-						$this->_session_id = Arr::get ($headers, 'X-Transmission-Session-Id');
-						if (empty ($this->_session_id)) {
-							throw new Exception ('Unable to retrieve X-Transmission-Session-Id', Exception::E_SESSIONID);
-						}
-					} else {
-						throw new Exception ('Invalid X-Transmission-Session-Id', Exception::E_SESSIONID);
+		switch ($response->get_status()) {
+			case 200 :
+				return $response->get_body();
+			break;
+
+			case 409:
+				if ($method === 'head') {
+					$this->_session_id = $response->get_headers()->offsetGet('x-transmission-session-id');
+					//$this->_session_id = Arr::get ($headers, 'X-Transmission-Session-Id');
+					if (empty ($this->_session_id)) {
+						throw new Exception ('Unable to retrieve X-Transmission-Session-Id', Exception::E_SESSIONID);
 					}
-				break;	
+				} else {
+					throw new Exception ('Invalid X-Transmission-Session-Id', Exception::E_SESSIONID);
+				}
+			break;
 
-				case 401:
-					throw new Exception ('Autentification needed. Invalid username/password', Exception::E_AUTHENTICATION);
-				break;
+			case 401:
+				throw new Exception ('Autentification needed. Invalid username/password', Exception::E_AUTHENTICATION);
+			break;
 
-				default:
-					throw new Exception ('Unexpected response from Transmission RPC', $response);
-			}					
-		}	    
+			default:
+				throw new Exception ('Unexpected response from Transmission RPC', $response);
+		}
 	}
 
 	/**
@@ -920,14 +922,14 @@ class TransmissionRPC {
 	{
 		if ( ! is_array ($data) OR empty ($data)) {
 			return NULL;
-		}		
+		}
 
 		foreach ($data as $key=>&$value) {
-			
+
 			if (is_object($value)) {
 				$value = $value->toArray();
 			}
-			
+
 			if (is_array($value)) {
 				$this->_sanitize_data ($value);
 			}
@@ -948,8 +950,8 @@ class TransmissionRPC {
 			if (is_string ($value)) {
 				if (mb_detect_encoding($value, 'auto') !== 'UTF-8') {
 				  $value = mb_convert_encoding($value, 'UTF-8');
-				}      
-			}			
+				}
+			}
 		}
 	}
 }
