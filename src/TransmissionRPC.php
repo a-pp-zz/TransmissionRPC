@@ -760,6 +760,16 @@ class TransmissionRPC {
 	}
 
 	/**
+	 * Get readable percent
+	 * @param $value
+	 * @return string
+	 */
+	private function _human_percent ($value)
+	{
+		return number_format(($value * 100), 2, '.', '').'%';
+	}
+
+	/**
 	 * Get readable filesize
 	 * @param $bytes
 	 * @param int $decimals
@@ -768,7 +778,7 @@ class TransmissionRPC {
 	private function _human_filesize ($bytes, $decimals = 2) {
 	    $size = array('B','kB','MB','GB','TB','PB','EB','ZB','YB');
 	    $factor = floor((strlen($bytes) - 1) / 3);
-	    return sprintf("%.{$decimals}f", $bytes / pow(1000, $factor)) . ' ' . @$size[$factor];
+	    return number_format(($bytes / pow(1000, $factor)), $decimals, '.', '') . ' ' . @$size[$factor];
 	}
 
 	/**
@@ -817,6 +827,12 @@ class TransmissionRPC {
 							case 'sizeWhenDone':
 								if ($this->_populate === TRUE OR in_array ('size', $this->_populate)) {
 									$value = $this->_human_filesize($value);
+								}
+							break;
+
+							case 'percentDone':
+								if ($this->_populate === TRUE OR in_array ('percent', $this->_populate)) {
+									$value = $this->_human_percent($value);
 								}
 							break;
 						}
